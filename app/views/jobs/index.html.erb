@@ -1,0 +1,63 @@
+<div class="container">
+ <div class='row'>
+ <div class='filter'>
+   <%= form_tag jobs_path, method: :get do %>
+    <%= label_tag :heading %>
+    <%= text_field_tag :heading, params[:heading] %>
+    <%= label_tag :city %>
+    <%= text_field_tag :city, params[:city] %>
+    <%= label_tag :state %>
+    <%= select_tag :state, params[:state] %>
+    <%= submit_tag 'Search', name: nil %>
+    <% end %>
+ </div>
+<% if @jobs.empty? %>
+  <hr>
+  <h3>No results found</h3>
+<% else %>
+
+    <div class='col-sm-2'></div>
+    <div class='col-sm-8'>
+      <h1>Recent Jobs</h1>
+    </div>
+    <div class='col-sm-2'></div>
+    </div>
+    <div class='row'>
+
+    <div class='col-sm-2'></div>
+    
+    <div class='col-sm-8'>
+    <% @jobs.each do |job| %>
+      <%= link_to job.heading, job %><br>
+      <%= truncate(job.body, length: 100, seperator: '') %><br>
+      <%= link_to 'Apply for this job', job.external_url %> &nbsp;&nbsp;
+      <%= job.city %>,
+      <%= job.state %>
+      <%= job.country %>
+      <div class='pull-right'>
+      <% if job.timestamp %> &nbsp;&nbsp;&nbsp;
+            <%= "#{time_ago_in_words(Time.at(job.timestamp.to_i))} ago" %>
+          <% else %>
+            <%= "#{time_ago_in_words(Time.at(job.created_at))} ago
+            " %>
+          <% end %>
+          </div>
+        <hr>
+        <% end %>
+        <%= will_paginate @jobs, renderer: BootstrapPagination::Rails %>
+    </div>
+
+    <div class='col-sm-2'>
+      
+    </div>
+
+ 
+
+ <% end %>
+ </div>
+  <br>
+
+  <%= link_to 'New Job', new_job_path %>
+</div>
+
+ 

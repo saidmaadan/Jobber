@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Heading:</strong>
+  <%= @job.heading %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @job.body %>
+</p>
+
+<p>
+    <strong>Posted:</strong>
+
+   <% if @job.timestamp %> &nbsp;&nbsp;&nbsp;
+            <%= "#{time_ago_in_words(Time.at(@job.timestamp.to_i))} ago" %>
+          <% else %>
+            <%= "#{time_ago_in_words(Time.at(@job.created_at))} ago" %>
+          <% end %>
+  
+</p>
+
+<p>
+  <strong>External url:</strong>
+  <%= @job.external_url %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @job.location %>
+</p>
+
+<%= link_to 'Edit', edit_job_path(@job) %> |
+<%= link_to 'Back', jobs_path %>
